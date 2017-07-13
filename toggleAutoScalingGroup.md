@@ -1,4 +1,13 @@
-**Create new Lambda function and Start Event**
+# Tutorial: scheduled start/stop of EC2 instances managed by Auto Scaling Groups
+
+If your EC2 instances in AWS are managed through Auto Scaling Groups, it is easy to schedule startup and shutdown of those instances, e.g. to save money.
+
+This tutorial walks you through setting up an AWS Lambda function that is triggered by CloudWatch Events and automatically changes the min, max and desired instances in your Auto Scaling Group(s).
+The idea is to toggle between 0 and a specifed min, max and desired amount of instances, so you only need a single Lambda function. 
+The premise is that you do not touch these Auto Scaling Group settings, or you might make your EC2 instances nocturnal. 
+
+
+###Create new Lambda function and Start Event
 1. Open AWS Lambda in the console and click `Create a Lambda function`.
 2. On the `Select blueprint` page, select `Blank function`.
 3. On the `Configure Triggers` page, click the grey square and select `CloudWatch Events`.
@@ -11,7 +20,7 @@ E.g. `cron(00 06 ? * MON-FRI *)` fires every weekday (Monday to Friday) at 6:00 
 8. Enable the `Enable trigger` checkbox.
 9. Click `Next`.
 
-**Configure function**
+###Configure function
 10. On the `Configure function` page, enter a `Name` and `Description` for the function.
 11. For `Runtime`, select `Python 2.7`.
 12. For `Code entry type` make sure `Edit code inline` is selected.
@@ -97,7 +106,7 @@ def get_current_min_group_size(group_name):
 23. Back on the `Configure function` screen, make sure your new Role is selected under `Existing role`
 24. Click on `Next` and `Create Function`.
 
-**Create Stop event**
+###Create Stop event
 25. To configure the second event (to stop your servers at the end of the weekday), on the `Triggers` tab of your new Lambda function, click on `Add trigger`.
 26. In the `Add trigger` popup, from the `Rule` dropdown, select `Create a new rule`.
 27. Enter a `Rule name` and `Rule description`.
