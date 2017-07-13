@@ -3,8 +3,8 @@
 If your EC2 instances in AWS are managed through Auto Scaling Groups, it is easy to schedule startup and shutdown of those instances, e.g. to save money.
 
 This tutorial walks you through setting up an AWS Lambda function that is triggered by CloudWatch Events and automatically changes the min, max and desired instances in your Auto Scaling Group(s).  
-The idea is to toggle between 0 (`stop`) and a specifed min, max and desired amount of instances (`start`), so you only need a single Lambda function.  
-The premise is that you do not touch these Auto Scaling Group settings manually, or you might make your EC2 instances nocturnal. 
+
+The idea is to toggle between 0 (`stop`) and a specifed min, max and desired amount of instances (`start`), so you only need a single Lambda function. The premise is that you do not touch these Auto Scaling Group settings manually, or you might make your EC2 instances nocturnal. 
 
 
 ### Create new Lambda function and Start Event
