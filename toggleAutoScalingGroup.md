@@ -120,4 +120,4 @@ You can test the function by hitting the `Test` button. The first time an `Input
 For `Sample event template` select `Scheduled event` and click `Save and test`.
 
 # Acknowledgement
-[This](http://blog.conygre.com/2016/11/18/starting-and-stopping-ec2-instances-using-a-lambda-and-cut-your-aws-bill-in-half/) tutorial helped setting up this tutorial.
+[This](http://blog.conygre.com/2016/11/18/starting-and-stopping-ec2-instances-using-a-lambda-and-cut-your-aws-bill-in-half/) tutorial on Nick Todd's blog helped me setting up this tutorial.
