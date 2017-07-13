@@ -118,7 +118,7 @@ E.g. `cron(00 20 ? * MON-FRI *)` fires every weekday (Monday to Friday) at 20:00
 
 That's it, all done!  
 You can test the function by hitting the `Test` button. The first time an `Input test event` popup will appear.  
-For `Sample event template` select `Input test event` and click `Save and test`.
+For `Sample event template` select `Scheduled event` and click `Save and test`.
 
 # Acknowledgement
 [This](http://blog.conygre.com/2016/11/18/starting-and-stopping-ec2-instances-using-a-lambda-and-cut-your-aws-bill-in-half/) tutorial helped setting up this tutorial.
