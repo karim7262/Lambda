@@ -2,25 +2,25 @@
 
 If your EC2 instances in AWS are managed through Auto Scaling Groups, it is easy to schedule startup and shutdown of those instances, e.g. to save money.
 
-This tutorial walks you through setting up an AWS Lambda function that is triggered by CloudWatch Events and automatically changes the min, max and desired instances in your Auto Scaling Group(s).
-The idea is to toggle between 0 and a specifed min, max and desired amount of instances, so you only need a single Lambda function. 
-The premise is that you do not touch these Auto Scaling Group settings, or you might make your EC2 instances nocturnal. 
+This tutorial walks you through setting up an AWS Lambda function that is triggered by CloudWatch Events and automatically changes the min, max and desired instances in your Auto Scaling Group(s).  
+The idea is to toggle between 0 (`stop`) and a specifed min, max and desired amount of instances (`start`), so you only need a single Lambda function.  
+The premise is that you do not touch these Auto Scaling Group settings manually, or you might make your EC2 instances nocturnal. 
 
 
-###Create new Lambda function and Start Event
+### Create new Lambda function and Start Event
 1. Open AWS Lambda in the console and click `Create a Lambda function`.
 2. On the `Select blueprint` page, select `Blank function`.
 3. On the `Configure Triggers` page, click the grey square and select `CloudWatch Events`.
 4. From the `Rule` dropdown, select `Create a new rule`.
 5. Enter a `Rule name` and `Rule description`.
 6. For `Rule type`, select `Schedule expression`.
-7. For `Schedule expression`, enter a Cron expression to specify at which day(s) and time this event should trigger. 
-For now only specify the event to start servers (E.g. at the beginning of the weekday). We will confire the second event later in this tutorial.
+7. For `Schedule expression`, enter a Cron expression to specify at which day(s) and time this event should trigger.  
+For now only specify the event to start servers (E.g. at the beginning of the weekday). We will confire the second event later in this tutorial.  
 E.g. `cron(00 06 ? * MON-FRI *)` fires every weekday (Monday to Friday) at 6:00 AM UTC. See [this](http://www.cronmaker.com) website for a handy Cron calculator.
 8. Enable the `Enable trigger` checkbox.
 9. Click `Next`.
 
-###Configure function
+### Configure function
 10. On the `Configure function` page, enter a `Name` and `Description` for the function.
 11. For `Runtime`, select `Python 2.7`.
 12. For `Code entry type` make sure `Edit code inline` is selected.
@@ -79,11 +79,11 @@ def get_current_min_group_size(group_name):
     return response["AutoScalingGroups"][0]["MinSize"]
 ```    
     
-14. For `Environment variables` add the following:
-  `NAMES` - Space separated list of the Auto Scaling Groups you want to manage with this function
-  `MIN_SIZE` - Minimum size of the Auto Scaling Group(s) when EC2 instances are started
-  `MAX_SIZE` - Maximum size of the Auto Scaling Group(s) when EC2 instances are started
-  `DESIRED_CAPACITY` - Desired capacity of the Auto Scaling Group(s) when EC2 instances are started
+14. For `Environment variables` add the following:  
+  `NAMES` - Space separated list of the Auto Scaling Groups you want to manage with this function  
+  `MIN_SIZE` - Minimum size of the Auto Scaling Group(s) when EC2 instances are started  
+  `MAX_SIZE` - Maximum size of the Auto Scaling Group(s) when EC2 instances are started  
+  `DESIRED_CAPACITY` - Desired capacity of the Auto Scaling Group(s) when EC2 instances are started  
 15. For `Handler`, make sure the value is `lambda_function.lambda_handler`.
 16. For `Role`, select `Create a custom role`. An IAM wizard will open in a new tab.
 
@@ -103,20 +103,20 @@ def get_current_min_group_size(group_name):
  ```
 22. Click on `Allow`.
 
-23. Back on the `Configure function` screen, make sure your new Role is selected under `Existing role`
+23. Back on the `Configure function` screen, make sure your new Role is selected under `Existing role`.
 24. Click on `Next` and `Create Function`.
 
-###Create Stop event
+### Create Stop event
 25. To configure the second event (to stop your servers at the end of the weekday), on the `Triggers` tab of your new Lambda function, click on `Add trigger`.
 26. In the `Add trigger` popup, from the `Rule` dropdown, select `Create a new rule`.
 27. Enter a `Rule name` and `Rule description`.
 28. For `Rule type`, select `Schedule expression`.
-29. For `Schedule expression`, enter a Cron expression to specify at which day(s) and time this event should trigger. 
+29. For `Schedule expression`, enter a Cron expression to specify at which day(s) and time this event should trigger.  
 E.g. `cron(00 20 ? * MON-FRI *)` fires every weekday (Monday to Friday) at 20:00 PM UTC. See [this](http://www.cronmaker.com) website for a handy Cron calculator.
 30. Enable the `Enable trigger` checkbox.
 
 
-That's it, all done!
+That's it, all done!  
 You can test the function by hitting the `Test` button. The first time an `Input test event` popup will appear.  
 For `Sample event template` select `Input test event` and click `Save and test`.
 
