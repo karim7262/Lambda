@@ -54,7 +54,6 @@ def lambda_handler(event, context):
             desired_capacity = 0
 
         print action + ": " + group
-        get_current_min_group_size(group)
         response = client.update_auto_scaling_group(
             AutoScalingGroupName=group,
             MinSize=min_size,
